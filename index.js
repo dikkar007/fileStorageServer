@@ -8,7 +8,7 @@ const serveIndex = require('serve-index')
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, './public/uploads')
+        cb(null, './public')
     },
     filename: (req, file, cb) => {
         cb(null, path.parse(file.originalname).name + '-' + Date.now() + path.extname(file.originalname))
@@ -34,8 +34,9 @@ app.get('/', function(req,res) {
 
 app.post('/upload', upload.single('file'), function(req,res) {
     debug(req.file);
-    console.log('storage location is ', 'http://'+req.hostname +':5001/' + req.file.path);
-    return res.send('storage location is : http://'+req.hostname +':5001/' + req.file.path);
+    //console.log('storage location is ', 'http://'+req.hostname +':5001/ftp/' + req.file.name);
+    let publicPath= 'http://'+req.hostname +':5001/ftp/' + req.file.filename;
+    return res.send('<html> <body>storage location is : <a href='+publicPath+'>'+publicPath+'</a></body></html>');
 })
 
 //if end point is /users/, use the router.
