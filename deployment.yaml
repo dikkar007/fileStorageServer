@@ -14,10 +14,24 @@
 # limitations under the License.
 
 # [START gke_quickstart_deployment_deployment_helloworld_gke]
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: standard-rwo
+  
+  
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helloworld-gke
+  name: fileStorage
 spec:
   replicas: 1
   selector:
